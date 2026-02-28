@@ -9,6 +9,6 @@ class Universe extends Model
 {
     use HasFactory;
 
-    // Aquí le decimos a Laravel que puede llenar la columna 'name'
+    
     protected $fillable = ['name'];
 }
