@@ -9,6 +9,6 @@ class Superhero extends Model
 {
     use HasFactory;
 
-    // Aquí también autorizamos la columna 'name'
+    
     protected $fillable = ['name'];
 }
