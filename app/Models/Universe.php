@@ -9,6 +9,10 @@ class Universe extends Model
 {
     use HasFactory;
 
-    // Aquí le decimos a Laravel que puede llenar la columna 'name'
     protected $fillable = ['name'];
+
+    // Relación: Un universo tiene muchos superhéroes
+    public function superheroes() {
+        return $this->hasMany(Superhero::class);
+    }
 }

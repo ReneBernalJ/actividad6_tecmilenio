@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('superheroes', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Nombre del superhéroe
+            $table->string('name'); // Agrega esta línea
+            $table->foreignId('universe_id')->constrained('universes')->onDelete('cascade'); // Y esta línea para la relación
             $table->timestamps();
         });
     }

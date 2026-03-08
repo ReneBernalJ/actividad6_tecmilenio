@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('universes', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Esta es la columna que pide Richard
+            $table->string('name'); // Asegúrate de agregar esta línea
             $table->timestamps();
         });
     }
