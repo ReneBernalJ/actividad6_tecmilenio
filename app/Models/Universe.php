@@ -11,7 +11,6 @@ class Universe extends Model
 
     protected $fillable = ['name'];
 
-    // Relación: Un universo tiene muchos superhéroes
     public function superheroes() {
         return $this->hasMany(Superhero::class);
     }
