@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Universe;
 use App\Models\Superhero;
+use App\Http\Controllers\SuperheroController; // ESTA ES LA LÍNEA NUEVA
 
 // Tus rutas anteriores
 Route::get('/universes', function () {
@@ -50,3 +51,8 @@ Route::get('/actividad-superheroe', function () {
     // 3. Read (Leer y mostrar con la relación)
     return Superhero::with('universe')->get();
 });
+
+// --- RUTAS DE LA ACTIVIDAD 8 ---
+Route::get('/mis-superheroes', [SuperheroController::class, 'index'])->name('superheroes.index');
+Route::get('/mis-superheroes/crear', [SuperheroController::class, 'create'])->name('superheroes.create');
+Route::post('/mis-superheroes/guardar', [SuperheroController::class, 'store'])->name('superheroes.store');
