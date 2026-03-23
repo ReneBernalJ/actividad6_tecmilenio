@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Models\Universe;
 use App\Models\Superhero;
-use App\Http\Controllers\SuperheroController; // ESTA ES LA LÍNEA NUEVA
+use App\Http\Controllers\SuperheroController;
+use App\Http\Controllers\UniverseController; // ESTA ES LA LÍNEA NUEVA PARA LA ACTIVIDAD 9
 
 // Tus rutas anteriores
 Route::get('/universes', function () {
@@ -52,7 +53,7 @@ Route::get('/actividad-superheroe', function () {
     return Superhero::with('universe')->get();
 });
 
-// --- RUTAS DE LA ACTIVIDAD 8 ---
-Route::get('/mis-superheroes', [SuperheroController::class, 'index'])->name('superheroes.index');
-Route::get('/mis-superheroes/crear', [SuperheroController::class, 'create'])->name('superheroes.create');
-Route::post('/mis-superheroes/guardar', [SuperheroController::class, 'store'])->name('superheroes.store');
+// --- RUTAS DE LA ACTIVIDAD 9 ---
+// El "atajo" que pidió el profe para crear todas las rutas de golpe
+Route::resource('universes_crud', UniverseController::class);
+Route::resource('superheroes_crud', SuperheroController::class);

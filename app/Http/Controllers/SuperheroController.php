@@ -2,47 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Superhero;
 use App\Models\Universe;
+use Illuminate\Http\Request;
 
 class SuperheroController extends Controller
 {
-    // 1. INDEX: Muestra la lista de todos los superhéroes
-    public function index()
-    {
-        // Traemos todos los superhéroes junto con su universo
+    public function index() {
         $superheroes = Superhero::with('universe')->get();
-        
-        // Los mandamos a una página web (vista) que vamos a crear en el siguiente paso
-        return view('superheroes_act8.index', compact('superheroes'));
+        return view('superheroes_crud.index', compact('superheroes'));
     }
 
-    // 2. CREATE: Muestra el formulario web para crear un superhéroe
-    public function create()
-    {
-        // Traemos los universos para que puedas elegir uno en el formulario
-        $universes = Universe::all(); 
-        
-        return view('superheroes_act8.create', compact('universes'));
+    public function create() {
+        $universes = Universe::all();
+        return view('superheroes_crud.create', compact('universes'));
     }
 
-    // 3. STORE: Toma los datos del formulario y los guarda en la base de datos
-    public function store(Request $request)
-    {
-        // Validamos que no envíen el formulario en blanco
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'universe_id' => 'required|exists:universes,id'
-        ]);
+    public function store(Request $request) {
+        $request->validate(['name' => 'required', 'universe_id' => 'required']);
+        Superhero::create($request->all());
+        return redirect()->route('superheroes_crud.index');
+    }
 
-        // Creamos al superhéroe
-        Superhero::create([
-            'name' => $request->name,
-            'universe_id' => $request->universe_id
-        ]);
+    public function show($id) {
+        $superhero = Superhero::findOrFail($id);
+        return view('superheroes_crud.show', compact('superhero'));
+    }
 
-        // Lo regresamos a la pantalla de la lista
-        return redirect()->route('superheroes.index');
+    public function edit($id) {
+        $superhero = Superhero::findOrFail($id);
+        $universes = Universe::all();
+        return view('superheroes_crud.edit', compact('superhero', 'universes'));
+    }
+
+    public function update(Request $request, $id) {
+        $request->validate(['name' => 'required', 'universe_id' => 'required']);
+        $superhero = Superhero::findOrFail($id);
+        $superhero->update($request->all());
+        return redirect()->route('superheroes_crud.index');
+    }
+
+    public function destroy($id) {
+        $superhero = Superhero::findOrFail($id);
+        $superhero->delete();
+        return redirect()->route('superheroes_crud.index');
     }
 }
